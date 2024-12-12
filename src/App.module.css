@@ -1,0 +1,20 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.todoContainer {
+  background: rgb(200, 199, 199);
+  min-width: 600px;
+  padding: 20px 55px;
+}
+
+.title {
+  font-size: 80px;
+  font-weight: 100;
+  color: antiquewhite;
+  text-align: center;
+  margin: 0px 10px 10px 10px;
+}
