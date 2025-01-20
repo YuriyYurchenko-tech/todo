@@ -1,16 +1,21 @@
-import { useEffect, useState } from 'react';
-
+import React, { useEffect, useState } from 'react';
 import styles from './App.module.css';
 import { Row } from 'react-bootstrap';
 import TodoForm from './components/TodoForm/TodoForm';
 import Task from './components/Task/Task';
 import type { TodoType } from './types/todoTypes';
 
-export default function App(): JSX.Element {
+export default function App(): React.JSX.Element {
   const [todos, setTodos] = useState<TodoType[]>(() => {
     const storedTodos = localStorage.getItem('todos');
-    return storedTodos ? JSON.parse(storedTodos) : [];
+    try {
+      return storedTodos ? (JSON.parse(storedTodos) as TodoType[]) : [];
+    } catch {
+      console.error('Failed to parse todos from localStorage');
+      return [];
+    }
   });
+  
   const [activeTab, setActiveTab] = useState<'all' | 'completed' | 'active'>('all');
 
   const [task, setTask] = useState<TodoType['text']>('');
@@ -30,7 +35,9 @@ export default function App(): JSX.Element {
   };
 
   const checkedTodo = (id: TodoType['id']) =>
-    setTodos(todos.map((todo) => (todo.id === id ? { ...todo, completed: !todo.completed } : todo)));
+    setTodos(
+      todos.map((todo) => (todo.id === id ? { ...todo, completed: !todo.completed } : todo)),
+    );
 
   const clearCompleted = () => {
     setTodos(todos.filter((todo) => !todo.completed));
