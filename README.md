@@ -1,2 +1,2 @@
 # npm i
-# nmp run start
+# npm run start
